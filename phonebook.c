@@ -4,7 +4,7 @@
 
 // Structure to represent a contact
 typedef struct contact {
-    char name[4];
+    char name[20];
     char num[10];
     struct contact* next; // Linked list pointer for contacts
 } Contact;
@@ -16,13 +16,13 @@ typedef struct treenode {
     Contact* details; // Pointer to the contact information
 } Treenode;
 
-typedef Treenode* (*DeleteContactFunction)(Treenode* root, char name[4]);
+typedef Treenode* (*DeleteContactFunction)(Treenode* root, char name[20]);
 
 // Global variable representing the root of the binary search tree
 Treenode* root = NULL;
 
 // Function to create a new contact node
-Treenode* createcontact(char name[4], char num[10]) {
+Treenode* createcontact(char name[20], char num[10]) {
     Treenode* newleaf = (Treenode*)malloc(sizeof(Treenode));
     Contact* new = (Contact*)malloc(sizeof(Contact));
     strcpy(new->name, name);
@@ -35,7 +35,7 @@ Treenode* createcontact(char name[4], char num[10]) {
 }
 
 // Function to add a new contact to the phonebook
-void addcontact(char name[4], char num[10]) {
+void addcontact(char name[20], char num[10]) {
     Treenode* current;
     Treenode* newcontact = createcontact(name, num);
 
@@ -69,7 +69,7 @@ void addcontact(char name[4], char num[10]) {
 }
 
 // Function to check if a contact with the given name exists in the phonebook
-int exists(char name[4]) {
+int exists(char name[20]) {
     Treenode* currentleaf = root;
     while (currentleaf != NULL) {
         if (strcmp(name, currentleaf->details->name) == 0) {
@@ -85,7 +85,7 @@ int exists(char name[4]) {
 }
 
 // Function to retrieve the phone number for a given name
-char* printnumber(char name[4]) {
+char* printnumber(char name[20]) {
     Treenode* currentleaf = root;
     while (currentleaf != NULL) {
         if (strcmp(name, currentleaf->details->name) == 0) {
@@ -130,7 +130,7 @@ void printall(Treenode* node) {
 }
 
 // Function to update the phone number for a given name and return the old phone number
-char* updatenum(char name[4], char num1[10]) {
+char* updatenum(char name[20], char num1[10]) {
     Treenode* currentleaf = root;
     while (currentleaf != NULL) {
         if (strcmp(name, currentleaf->details->name) == 0) {
@@ -174,7 +174,7 @@ void deletephonebook(Treenode* root) {
 }
 
 // Recursive function for contact deletion
-Treenode* deletecontact_recursive(Treenode* root, char name[4]) {
+Treenode* deletecontact_recursive(Treenode* root, char name[20]) {
     if (root == NULL) {
         return root;
     }
@@ -207,7 +207,7 @@ Treenode* deletecontact_recursive(Treenode* root, char name[4]) {
 }
 
 // Function to delete a specific contact
-void deletecontact(char name[4]) {
+void deletecontact(char name[20]) {
     DeleteContactFunction deleteFunction = deletecontact_recursive;
     root = deleteFunction(root, name);
 }
